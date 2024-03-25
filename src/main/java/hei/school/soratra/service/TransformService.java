@@ -17,27 +17,21 @@ public class TransformService {
   private static final String originalPrefix = "--original";
   private static final String transformPrefix = "--transform";
 
-  public String save(String id, String value) {
+  public String save(String id, String value){
     try {
-      File originalFile = Files.createTempFile(id + originalPrefix, ".txt").toFile();
+      File originalFile = Files.createTempFile(id + originalPrefix, null).toFile();
       FileWriter writer = new FileWriter(originalFile);
-      writer.append(value);
+      writer.append(value.toLowerCase());
       writer.close();
       bucket.upload(originalFile, id + originalPrefix);
 
-      File transformFile = Files.createTempFile(id + transformPrefix, ".txt").toFile();
-      FileWriter tWriter = new FileWriter(transformFile);
-      tWriter.append(value.toUpperCase());
-      tWriter.close();
-      bucket.upload(transformFile, id + originalPrefix);
-      boolean original = originalFile.delete();
-      boolean transform = transformFile.delete();
-      if (original && transform) {
-        System.out.println("Yay !");
-      }
+      File transformFile = Files.createTempFile(id + transformPrefix, null).toFile();
+      writer = new FileWriter(transformFile);
+      writer.append(value.toUpperCase());
+      writer.close();
+      bucket.upload(transformFile, id + transformPrefix);
       return null;
-    } catch (Exception ignored) {
-    }
+    }catch (Exception ignored){}
     return null;
   }
 

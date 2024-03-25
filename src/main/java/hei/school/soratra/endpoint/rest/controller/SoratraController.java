@@ -13,8 +13,7 @@ public class SoratraController {
 
   @PutMapping("/{id}")
   public String saveSoratra(@PathVariable String id, @RequestBody String value) {
-    String lowerCase = value.toLowerCase();
-    return service.save(id, lowerCase);
+    return service.save(id, value);
   }
 
   @GetMapping("/{id}")
