@@ -12,18 +12,13 @@ public class SoratraController {
   private final TransformService service;
 
   @PutMapping("/{id}")
-  public String saveSoratra(
-    @PathVariable String id,
-    @RequestBody String value
-  ){
+  public String saveSoratra(@PathVariable String id, @RequestBody String value) {
     String lowerCase = value.toLowerCase();
     return service.save(id, lowerCase);
   }
 
   @GetMapping("/{id}")
-  public Transform getSoratra(
-    @PathVariable String id
-  ){
+  public Transform getSoratra(@PathVariable String id) {
     return service.get(id);
   }
 }
