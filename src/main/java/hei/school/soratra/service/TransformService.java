@@ -23,11 +23,12 @@ public class TransformService {
       FileWriter writer = new FileWriter(originalFile);
       writer.append(value);
       writer.close();
+      bucket.upload(originalFile, id + originalPrefix);
 
       File transformFile = Files.createTempFile(id + transformPrefix, ".txt").toFile();
-      writer = new FileWriter(transformFile);
-      writer.append(value.toUpperCase());
-      bucket.upload(originalFile, id + originalPrefix);
+      FileWriter tWriter = new FileWriter(transformFile);
+      tWriter.append(value.toUpperCase());
+      tWriter.close();
       bucket.upload(transformFile, id + originalPrefix);
       boolean original = originalFile.delete();
       boolean transform = transformFile.delete();
